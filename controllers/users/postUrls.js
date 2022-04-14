@@ -1,10 +1,8 @@
 /* import { Urls } from '../../models/shortUrl'; */
-const UrlsList = require('../../models/shortUrlList');
-const md5 = require('md5');
+const UrlsList = require('../../models/urlslist');
 
 const newUrlfunction = async (req, res) => {
-    const {username, email, member, premium, password, url } = req.body;
-    const passwordtosave = md5(password);
+    const {username, url } = req.body;
     UrlsList.findOne( {url} ).then((urlregistered) => {
         if (urlregistered) {
             return res.json({ mensaje: "Ya se ha recortado esa url", urlregistered});
@@ -23,10 +21,7 @@ const newUrlfunction = async (req, res) => {
                   //y si es solo member quitar el string de pubicidad
                   const newurl = new UrlsList({
                       username: req.body.username,
-                      email: req.body.email,
-                      member: req.body.member,
-                      premium: req.body.premium,
-                      password: passwordtosave,
+                      clicksCounter:0,
                       url: req.body.url,
                       shorturl: shortUrlcreated
                   })
