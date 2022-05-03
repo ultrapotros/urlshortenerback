@@ -1,18 +1,23 @@
-/* import { Urls } from '../../models/shortUrl'; */
 const UrlsList = require('../../models/urlslist');
 
 const newUrlfunction = async (req, res) => {
     const {username, url } = req.body;
+    console.log('postUrls')
+    console.log(username)
     UrlsList.findOne( {url} ).then((urlregistered) => {
         if (urlregistered) {
-            return res.json({ mensaje: "Ya se ha recortado esa url", urlregistered});
-        }  
+             const test = urlregistered.username;
+            if (test==username) {
+                return res.status(423).json({ mensaje: "Ya has recortado esa url", urlregistered});
+            }  
+        }
+       
         else {
             let shortUrlcreated2 = Math.random().toString(36).substr(2, 6);
             const shortUrlcreated = 'www.'+shortUrlcreated2+'.com';
             UrlsList.findOne( {shorturl:shortUrlcreated} ).then((isShortUrlcreated) => {
               if (isShortUrlcreated) {
-                  return res.json({mensaje: "Ya hay una url igual", shortUrlcreated, isShortUrlcreated});
+                  return res.status(403).json({mensaje: "Ya hay una url igual", shortUrlcreated, isShortUrlcreated});
               }
               else {
                   //en el body se podría pasar un pequeño string de personalización para los premium, en el que se sustituyera yus por su  cadena
@@ -23,7 +28,7 @@ const newUrlfunction = async (req, res) => {
                       username: req.body.username,
                       clicksCounter:0,
                       url: req.body.url,
-                      shorturl: shortUrlcreated
+                      shorturl: shortUrlcreated2
                   })
                   newurl.save().then((registro) => {
                   res.json({ mensaje: "Registro creado correctamente", registro });
@@ -31,9 +36,10 @@ const newUrlfunction = async (req, res) => {
                   .catch((error) => console.error(error));
               }
             })
-            .catch((error) => console.error(error));
+            .catch((error) => console.error('primer catach',error));
         }  
     })
+    .catch((error) => console.error(error));
 }
 
 

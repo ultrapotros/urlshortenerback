@@ -20,7 +20,6 @@ module.exports = myClient; */
 
 const mongoose = require("mongoose");
 
-/* const MONGO_URL = "mongodb://localhost/autenticacionLocalYT"; */
 const MONGO_URL = "mongodb+srv://santi:otraContra@cluster0.ez5kx.mongodb.net/UrlShortener";
 
 const myClient = async () => {

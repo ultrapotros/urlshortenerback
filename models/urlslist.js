@@ -1,10 +1,10 @@
 const {model , Schema}   = require("mongoose");
 
 const Urlsdata = new Schema({
-    username: {type: String}, //o nombre, o nombre y apellidos??????
+    username: {type: String, unique: true, required:true}, 
     clicksCounter: {type:Number},
-    url: {type: String, unique: true, required:true},
-    shorturl: {type: String, /* unique: true,  *//* required:true */},
+    url: {type: String},
+    shorturl: {type: String,  unique: true, required:true },
     createdAt: {type: Date, default: Date.now},
 })
 

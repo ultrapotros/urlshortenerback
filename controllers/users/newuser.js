@@ -1,9 +1,8 @@
 const User = require('../../models/users');
 
 const newUser = async (req, res) => {
-
     const { username, premium, email, password } = req.body;
-
+    console.log('newuser')
     User.findOne({ username }).then((usuario) => {
       if (usuario) {
         return res.json({ mensaje: "Ya existe un usuario con ese username" });

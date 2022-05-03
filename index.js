@@ -9,6 +9,10 @@ const Tracing = require("@sentry/tracing");
 // or use es6 import statements
 // import * as Tracing from '@sentry/tracing';
 
+const routes = require('./routes');
+const validateToken = require('./middlewares/validateToken');
+// variables to autenticate by token
+
 Sentry.init({
   dsn: "https://f536d4f790194e26ad6c6ac8a1900d9f@o1170626.ingest.sentry.io/6269213",
 
@@ -36,7 +40,6 @@ var md5 =require('md5');
 var app = require('express')();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
-/* app.use(require('./middlewares/checkBody')); */
 app.use(process.env.ROOT, require('./routes'));
 app.post('/api/login', require('./controllers/loginController'));
 app.listen(3001, () => {
