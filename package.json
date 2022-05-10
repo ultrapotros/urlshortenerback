@@ -21,8 +21,10 @@
   "dependencies": {
     "@sentry/node": "^6.18.2",
     "@sentry/tracing": "^6.18.2",
+    "aws-jwt-verify": "^3.0.0",
     "blueimp-md5": "^2.19.0",
     "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",

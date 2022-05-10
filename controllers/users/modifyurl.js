@@ -1,18 +1,25 @@
-const UrlsList = require('../../models/urlslist');
+const  {modifyUrl} = require('../../managers/urls');
 
-const modifyUrl = async (req, res) => {
+async function modifyOneUrl (req, res){
     const filter = {"_id":req.params.id};
     const update = {"shorturl":req.params.newshorturl};
-    //we search the shorurl received and increment clicksCounter and get the original url
-    console.log('modifyurl');
-    UrlsList.findOneAndUpdate( filter, update, { returnOriginal: false }).then((data) => {
-        if (!data) {
-            return res.json({ mensaje: "No existe esa url"});
-        }  
+    try {
+
+        const result = await modifyUrl(filter,update)
+        console.log('respuesta recibida')
+        /* console.log(res) */
+        console.log('en controler     '+result)
+        res.status(200).json(result)
+        /* if (result) {
+            console.log('en if')
+            res.status(200).json(result);
+        }
         else {
-            res.status(200).json(data.url);
-        }  
-    })
+            console.log('en else')
+            res.status(404).json("not found")
+        } */
+    } catch(error) { console.log(error) }
+        
 }
 
-module.exports = modifyUrl;
+module.exports = modifyOneUrl; 

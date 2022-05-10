@@ -1,20 +1,9 @@
-const UrlsList = require('../../models/urlslist');
+const {getUserUrls}= require('../../managers/urls');
 
-const geturls = async (req, res) => {
-    const usernametosearch  = req.params.username;
-    console.log('get-user')
-    const list = await UrlsList.find().where('username').all(usernametosearch).then((userurls) => {
-        if (userurls) {
-            return res.json({userurls});
-        }  
-        else {
-            return res.json({mensaje: "Ya hay una url igual", shortUrlcreated, isShortUrlcreated});
-            }
-        })  
-    .catch((error) => console.error(error));
-    return list;
-
+async function geturls (req, res){
+    console.log(req.params.username);
+    let result = await getUserUrls(req.params.username);
+    res.status(200).json(result);
 }
 
-
-module.exports = geturls;
+module.exports = geturls; 

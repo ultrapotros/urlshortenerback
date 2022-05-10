@@ -1,4 +1,4 @@
-const User = require('../../models/users');
+/* const User = require('../../models/users');
 
 const newUser = async (req, res) => {
     const { username, premium, email, password } = req.body;
@@ -25,4 +25,24 @@ const newUser = async (req, res) => {
   });
 }
   
-module.exports = newUser;
+module.exports = newUser; */
+
+import { Auth } from 'aws-amplify';
+const { Auth } = require('.././../aws-amplify') ;
+
+async function signUp() {
+    try {
+        const { user } = await Auth.signUp({
+            username,
+            password,
+            attributes: {
+                email,          // optional
+                phone_number,   // optional - E.164 number convention
+                // other custom attributes 
+            }
+        });
+        console.log(user);
+    } catch (error) {
+        console.log('error signing up:', error);
+    }
+}

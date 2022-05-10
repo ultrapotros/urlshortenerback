@@ -13,6 +13,6 @@ const getlongurl = async (req, res) => {
     .catch((error) => console.error(error));
     return list;
 }
-
+//ESTA RUTA NO ESTA USADA///////////////////////////////////
 
 module.exports = getlongurl;
