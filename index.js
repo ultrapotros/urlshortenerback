@@ -4,8 +4,6 @@ const Sentry = require("@sentry/node");
 const cors = require("cors");
 
 const Tracing = require("@sentry/tracing");
-const routes = require('./routes');
-const validateToken = require('./middlewares/validateToken');
 const validateCognitoToken = require('./middlewares/CognitoJwtVerifier');
 // variables to autenticate by token
 Sentry.init({
@@ -33,9 +31,12 @@ var app = require('express')();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(cors());
+
+//route for requested Authoritation petitions
 app.use(process.env.ROOT_LOGGED,validateCognitoToken, require('./routes'));
+
+//route for non requested Authoritation petitions
 app.use(process.env.ROOT, require('./routes'));
-app.post('/api/login', require('./controllers/loginController'));
 app.listen(3001, () => {
 console.log('Working!!!');
 myClient()
