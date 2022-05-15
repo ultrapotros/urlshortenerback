@@ -31,7 +31,7 @@ const handleCreateUrl = async (username,url) => {
 
         const isShortUrlcreated = await UrlsList.findOne( {shorturl:shortUrlcreated} )
         if (isShortUrlcreated) {
-            return ({mensaje: "Ya hay una url igual", shortUrlcreated, isShortUrlcreated});
+            return ({mensaje: "That short url exists"});
         }
         else {
             const newurl = new UrlsList({
@@ -57,7 +57,6 @@ const modifyUrl = async (filter,update) => {
     //we search the shorurl received to not repeat shorurls
     try {
         const isShortUrlcreated = await UrlsList.findOne( {shorturl:update.shorturl} )
-        console.log(isShortUrlcreated)
         if (isShortUrlcreated) {
             return ({message: "Already exists"});
         }
@@ -113,7 +112,7 @@ const getUserUrls = async (user) => {
             return ({userurls})
         }  
         else {
-            return res.json({mensaje: "Ya hay una url igual", shortUrlcreated, isShortUrlcreated});
+            return res.json({mensaje: "Ya hay una url igual"});
             }
         })  
     .catch((error) => console.error(error));
@@ -121,16 +120,15 @@ const getUserUrls = async (user) => {
 
 }
 
-const redirect = async (req, res) => {
+const redirect = async (url) => {
     //we search the shorurl received and increment clicksCounter and get the original url
-    UrlsList.findOneAndUpdate( {shorturl:req.params.shortid},{$inc:{clicksCounter:1}}).then((data) => {
-        if (!data) {
-            return res.json({ mensaje: "No existe esa url", shorturl});
-        }  
-        else {
-            res.status(200).json(data.url);
-        }  
-    })
+    try {
+        const originalUrl = await UrlsList.findOneAndUpdate( {shorturl:url},{$inc:{clicksCounter:1}})
+        return originalUrl.url
+    }
+    catch(err) {
+        return err
+    }
 }
 
 module.exports =    {newUrl,
