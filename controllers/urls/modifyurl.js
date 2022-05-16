@@ -11,7 +11,7 @@ async function modifyOneUrl (req, res){
         else {
             res.status(404).json("not found")
         }
-    } catch(error) { console.log(error) }
+    } catch(error) { return (error) }
 }
 
 module.exports = modifyOneUrl; 

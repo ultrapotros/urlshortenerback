@@ -1,4 +1,3 @@
-const { CommentsController } = require('moongose/controller');
 const UrlsList = require('../models/urlslist');
 
 const newUrl = async (username, url) => {
@@ -7,7 +6,6 @@ const newUrl = async (username, url) => {
 
         const urlregistered = await UrlsList.findOne( {url} )
         if (urlregistered) {
-            console.log('primer if')
             const test = urlregistered.username;
             if (test==username) {
                 return  urlregistered;
@@ -76,19 +74,6 @@ const modifyUrl = async (filter,update) => {
     catch (error) { console.log(error) }
 }
 
-const getlongurl = async (req, res) => {
-    const list = await UrlsList.find().where('shorturl').all(req.params.shortid).then((longurl) => {
-        if (longurl) {
-            return res.status(200).json({longurl});
-        }  
-        else {
-            return res.status(423).json({mensaje: "No se encuentra esa url"});
-            }
-        })  
-    .catch((error) => console.error(error));
-    return list;
-}
-
 const deleteUrl = async (shorturl) => {
     try {
         const data = await UrlsList.findByIdAndDelete(shorturl.body)
@@ -133,7 +118,6 @@ const redirect = async (url) => {
 
 module.exports =    {newUrl,
                     modifyUrl,
-                    getlongurl,
                     deleteUrl,
                     getUserUrls,
                     redirect};
