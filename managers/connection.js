@@ -1,7 +1,7 @@
 
 const mongoose = require("mongoose");
 
-const MONGO_URL = "mongodb+srv://santi:otraContra@cluster0.ez5kx.mongodb.net/UrlShortener";
+const MONGO_URL =process.env.MONGODB;
 
 const myClient = async () => {
   await mongoose

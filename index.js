@@ -7,7 +7,7 @@ const Tracing = require("@sentry/tracing");
 const validateCognitoToken = require('./middlewares/CognitoJwtVerifier');
 // variables to autenticate by token
 Sentry.init({
-  dsn: "https://f536d4f790194e26ad6c6ac8a1900d9f@o1170626.ingest.sentry.io/6269213",
+  dsn: process.env.SENTRY,
 
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
